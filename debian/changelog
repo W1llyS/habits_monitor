@@ -1,0 +1,36 @@
+habits (0.1.4-0extras19.10.0) bionic; urgency=medium
+
+  * Improve icon resolution
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Thu, 05 Mar 2020 21:34:55 +0100
+
+habits (0.1.3-0extras19.10.0) eoan; urgency=medium
+
+  * Fix a minor typo
+  * Add Ducth translation
+  * Add units to feet and meters
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Mon, 10 Feb 2020 21:08:03 +0100
+
+habits (0.1.2-0extras19.10.0) eoan; urgency=medium
+
+  * Update Highcharts to version 8.0
+  * Add colors preferences to chart
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sat, 28 Dec 2019 21:38:21 +0100
+
+habits (0.1.1-0extras19.10.5) eoan; urgency=medium
+
+  * Add translation to Spanish
+  * Change directory
+  * Fix minor bugs
+  * Remove limit for number of clics
+  * Changed color for distance, clics and keys
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sat, 28 Dec 2019 09:36:44 +0100
+
+habits (0.1.0-0extras19.10.11) eoan; urgency=medium
+
+  * First version
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Fri, 27 Dec 2019 09:47:50 +0100

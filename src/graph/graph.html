@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>My-Weather-Indicator (Evolution)</title>
+		<style>
+			html, body {
+				height: 100%;
+				margin: 0;
+				padding: 0;
+			}
+			#container {
+				width: 100%;
+				height: 100%;
+				min-width: 850px;
+				min-height: 550px;
+			}
+		</style>
+		<script type="text/javascript" src="jquery.min.js"></script>
+		<script type="text/javascript">
+			var chart;
+			var units = 'meters';
+			window.addEventListener('resize', function() {
+				if (typeof chart !== 'undefined' && chart) {
+					chart.reflow();
+				}
+			});
+			function set_colors(distance_color, clics_color, keys_color){
+				chart.update({
+					series:[{color: clics_color},
+							{color: keys_color}]
+				});
+			}
+			function set_units(units){
+				// Units function kept for compatibility but does nothing now
+				// since we removed distance from the chart
+			}
+			function draw_graph(atitle, asubtitle, days, distance, clics, keys){
+				chart = Highcharts.chart('container', {
+					chart: {
+						type: 'column'
+					},
+					title: {
+						text: atitle
+					},
+					subtitle: {
+						text: asubtitle
+					},
+					exporting: {
+						fallbackToExportServer: false,
+						buttons: {
+							contextButton: {
+								menuItems: ['printChart', 'downloadPNG', 'downloadJPEG', 'downloadPDF', 'downloadSVG']
+							}
+						}
+					},
+					xAxis: {
+						categories: days,
+						labels: {
+							align: 'right',
+							rotation: -30
+						}
+					},
+					yAxis: {
+						title: {
+							text: 'Count'
+						},
+						opposite: true
+					},
+					tooltip: {
+						xDateFormat: '%H:%M - %e of %b',
+						shared: true
+					},					
+					series: [
+					/*{
+						name: 'Distance',
+						color: '#445c3c',
+						data: distance,
+						marker: {
+							radius: 4
+						},
+						tooltip: {
+							valueSuffix: ((units == 'feet') ? ' f': ' m')
+						}
+					},*/
+					{
+						name: 'Clicks',
+						color: '#bd574e',
+						data: clics,
+						marker: {
+							radius: 4
+						},
+						tooltip: {
+							valueSuffix: ' clicks'
+						}
+
+					},{
+						name: 'Keys',
+						color: '#142d4c',
+						data: keys,
+						marker: {
+							radius: 4
+						},
+						tooltip: {
+							valueSuffix: ' keys'
+						}
+					}
+					]
+				});
+			};
+			function send(msg) {
+				console.log("send() called with: " + msg);
+				try {
+					var msgObj = JSON.parse(msg);
+					// Use WebKit message handler if available
+					if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.fullscreen) {
+						if (msgObj.action === "fullscreen") {
+							window.webkit.messageHandlers.fullscreen.postMessage(msg);
+							console.log("Message sent via WebKit handler");
+							return;
+						}
+					}
+				} catch(e) {
+					console.log("Error parsing message: " + e);
+				}
+				// Fallback to document.title method
+				document.title = msg;
+				console.log("document.title set to: " + document.title);
+			}			
+		</script>
+	</head>
+	<body>
+		<script src="highcharts.js"></script>
+		<script src="exporting.js"></script>
+		<script src="offline-exporting.js"></script>
+		<div id="container"></div>
+		<script type="text/javascript">
+			jQuery(document).ready(function() {
+				atitle='title';
+				asubtitle='subtitle';
+				days = ['2019-12-26', '2019-12-27', '2019-12-28']
+				distance=[10, 11, 12];
+				clics=[30, 35, 40];
+				keys=[120, 150, 140];
+				draw_graph(atitle,asubtitle,days,distance,clics,keys);
+				send('{"status":"ready"}');
+			});
+		</script>
+	</body>
+</html>
